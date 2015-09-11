@@ -1,0 +1,4 @@
+- Core that handles initializing and maintaining the IRC connection, in addition to loading and calling commands and such
+- IRC connection class that handles actually connecting to IRC, reading and writing lines, and parsing lines to send back to the core
+- Modules that get compiled in and loaded that contain classes with functions to handle commands and such
+- Configuration parser
