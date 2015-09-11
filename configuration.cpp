@@ -17,6 +17,10 @@ bool Configuration::Parse() {
         std::string value;
         bool in_value = false;
         
+        if (line.empty()) {
+            continue;
+        }
+        
         for (char& c : line) {
             if (in_value) {
                 value += c;;
