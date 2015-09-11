@@ -10,7 +10,7 @@ class Configuration {
     public:
         Configuration(std::string path);
         /* Parse the configuration. This must be called before you try to get anything from it. */
-        bool Parse();
+        void Parse();
         /* Get a string from the configuration, by key. Returns true and places it into out if it was found. 
          * Returns false if not found.
          */

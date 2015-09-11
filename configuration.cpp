@@ -2,14 +2,15 @@
 
 Configuration::Configuration(std::string file) {
     this->file = file;
+    this->Parse();
 }
 
-bool Configuration::Parse() {
+void Configuration::Parse() {
     std::ifstream is(this->file);
     std::string line;
     
     if (!is.is_open()) { /* File doesn't exist or is inaccessible. */
-        return false;
+        throw std::runtime_error("Failed to open configuration file " + this->file);
     }
     
     while (getline(is, line)) {
@@ -38,7 +39,6 @@ bool Configuration::Parse() {
     }
     
     is.close();
-    return true;
 }
 
 bool Configuration::GetString(std::string key, std::string &out) {

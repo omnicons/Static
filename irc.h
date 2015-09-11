@@ -9,10 +9,12 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 
-
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <stdexcept>
+
+#include "linebuf.h"
 
 using std::cout;
 
@@ -22,10 +24,11 @@ class IrcConnection {
         ~IrcConnection();
         bool Connect();
         void Disconnect();
-        bool WriteLine(std::string line);
+        void WriteLine(std::string line);
         bool ReadLine(std::string &line);
     private:
         std::string host;
         int port;
         int sock;
+        LineBuffer *buffer;
 };
