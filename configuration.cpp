@@ -8,6 +8,10 @@ bool Configuration::Parse() {
     std::ifstream is(this->file);
     std::string line;
     
+    if (!is.is_open()) { /* File doesn't exist or is inaccessible. */
+        return false;
+    }
+    
     while (getline(is, line)) {
         std::string key;
         std::string value;
