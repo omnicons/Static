@@ -5,6 +5,10 @@ IrcConnection::IrcConnection(std::string host, int port) {
     this->port = port;
 }
 
+IrcConnection::~IrcConnection() {
+    this->Disconnect();
+}
+
 bool IrcConnection::Connect() {
     int res;
     struct addrinfo hints; 
@@ -27,7 +31,6 @@ bool IrcConnection::Connect() {
 	    return false;
 	}
 		
-	
 	if ((res = connect(this->sock, servinfo->ai_addr, servinfo->ai_addrlen)) == -1) { 
         cout << "Failed to connect to IRC server!\n";
 		freeaddrinfo(servinfo);

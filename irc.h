@@ -19,6 +19,7 @@ using std::cout;
 class IrcConnection {
     public:
         IrcConnection(std::string host, int port);
+        ~IrcConnection();
         bool Connect();
         void Disconnect();
         bool WriteLine(std::string line);
