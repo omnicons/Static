@@ -41,3 +41,19 @@ bool Configuration::GetString(std::string key, std::string &out) {
 
     return false;
 }
+
+bool Configuration::GetInt(std::string key, int &out) {
+    std::string str;
+    
+    if (!this->GetString(key, str)) {
+        return false;
+    }
+    
+    try {
+        out = std::stoi(str);
+        return true;
+    } catch (std::invalid_argument &ignored) {
+    }
+    
+    return false;
+}
