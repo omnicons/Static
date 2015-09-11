@@ -33,7 +33,9 @@ void Configuration::Parse() {
                 key += c;
             }
         }
-        value = value.substr(1);
+        if (value.length() > 0 && isspace(value[0])) {
+            value = value.substr(1); /* Trim off leading space */
+        }
         
         this->config[key] = value;
     }
