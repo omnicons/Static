@@ -1,10 +1,11 @@
 CC=g++
-DEFAULT_CFLAGS:=-I include/ -std=c++11 -g -Wall -Wextra -pedantic
-CFLAGS?=
-CFLAGS += $(DEFAULT_CFLAGS)
 SDIR=src
 IDIR=include
 ODIR=obj
+
+DEFAULT_CFLAGS:=-I $(IDIR)/ -std=c++11 -g -Wall -Wextra -pedantic
+CFLAGS?=
+CFLAGS += $(DEFAULT_CFLAGS)
 OBJECTS=$(patsubst $(SDIR)/%.cpp,$(ODIR)/%.o,$(wildcard $(SDIR)/*.cpp))
 OUT=bot
 
