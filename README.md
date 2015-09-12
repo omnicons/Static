@@ -3,9 +3,8 @@ Version 3 of the Static IRC bot hosted for BronyTV written in C++
 # Installation
 It's as simple as going in the directory and building it as long as you have the build-essential package installed
 
-     cd Static/
-  
-    ./Makefile
+    cd Static/
+    make
 # Configuration
 This bit is subject to change as how we're handing configuration right now is simple, but more functionality will be added later.
 
