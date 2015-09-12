@@ -1,0 +1,3 @@
+irc_host = irc.example.com
+irc_port = 6667
+irc_nick = Static
