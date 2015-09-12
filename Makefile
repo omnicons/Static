@@ -1,8 +1,11 @@
 CC=g++
-DEFAULT_CFLAGS:=-std=c++11 -g -Wall -Wextra -pedantic
+DEFAULT_CFLAGS:=-I include/ -std=c++11 -g -Wall -Wextra -pedantic
 CFLAGS?=
 CFLAGS += $(DEFAULT_CFLAGS)
-OBJECTS=$(patsubst %.cpp,%.o,$(wildcard *.cpp))
+SDIR=src
+IDIR=include
+ODIR=obj
+OBJECTS=$(patsubst $(SDIR)/%.cpp,$(ODIR)/%.o,$(wildcard $(SDIR)/*.cpp))
 OUT=bot
 
 all: bot
@@ -10,8 +13,8 @@ all: bot
 bot: $(OBJECTS)
 	$(CC) -o $(OUT) $^ $(CFLAGS)
 
-%.o: %.cpp
-	$(CC) -c $< $(CFLAGS)
+$(ODIR)/%.o: $(SDIR)/%.cpp
+	$(CC) -c $< -o $@ $(CFLAGS)
 
 clean:
 	rm -f $(OBJECTS)
