@@ -1,4 +1,5 @@
 #include "configuration.h"
+using std::cout;
 
 Configuration::Configuration(std::string file) {
     this->file = file;
@@ -66,4 +67,16 @@ bool Configuration::GetInt(std::string key, int &out) {
     }
     
     return false;
+}
+
+bool Configuration::GetStringList(std::string key, std::vector<std::string> &out) {
+    std::string str;
+    
+    if (!this->GetString(key, str)) {
+        return false;
+    }
+    
+    out = split_string(str, ", ");
+
+    return true;
 }

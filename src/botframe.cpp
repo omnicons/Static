@@ -5,9 +5,12 @@ Bot::Bot() {
     int port;
     
     this->config = new Configuration("bot.config");
-    if (!this->config->GetString("irc_nick", this->nick)) {
-        throw std::runtime_error("Failed to load IRC nickname from config!");
+    if (!this->config->GetString("irc_nick", this->nick) || !this->config->GetString("irc_ident", this->ident) || !this->config->GetString("irc_realname", this->realname)) {
+        throw std::runtime_error("Failed to load IRC identity from config!");
     }
+    
+    this->config->GetStringList("irc_channels", this->channels); /* If this fails, we'll just assume we aren't joining any channels. */
+    
     if (this->config->GetString("irc_host", host) && this->config->GetInt("irc_port", port)) {
         this->conn = new IrcConnection(host, port);
     } else {
@@ -26,15 +29,19 @@ void Bot::Go() {
     this->conn->Connect();
     
     this->Raw("NICK " + this->nick);
-    this->Raw("USER " + this->nick + " * * :" + this->nick); /* XXX: Don't use nick as ident and realname. */
+    this->Raw("USER " + this->ident + " * * :" + this->realname);
     
     while (true) {
         if (this->conn->ReadLine(raw)) {
             Line ln(raw); /* Parse the line using our line parser */
             cout << "--> " << raw << "\n";
             
-            if (ln.command == "PING" && ln.params.size() > 0) {
+            if (ln.command == "PING" && ln.params.size() > 0) { /* Ping response */
                 this->Raw("PONG :" + ln.params[0]);
+            } else if (ln.command == "001") { /* RPL_WELCOME: Registered with the network */
+                for (std::string &channel : this->channels) {
+                    this->Join(channel);
+                }              
             }
         }    
     }
@@ -43,4 +50,8 @@ void Bot::Go() {
 void Bot::Raw(std::string line) {
     cout << "<-- " << line << "\n";
     this->conn->WriteLine(line);
+}
+
+void Bot::Join(std::string channel) {
+    this->Raw("JOIN " + channel);
 }
