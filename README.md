@@ -14,6 +14,14 @@ Current options are:
 
 * irc_port (Currently only supports non ssl ports)
 
+Proposted configuration options that have not been added as of yet:
+
+* irc_nick
+
+* autojoin (For having the bot join channels upon connection)
+
+* nickerv authentication perform on connect (sasl might come later after ssl connctions are implemented)
+
 # Features
 The bot is based around plugins and will support functions similar to a network services bot for larger channels that require more functionality and automation.
 
