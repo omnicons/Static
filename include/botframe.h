@@ -1,6 +1,10 @@
+#pragma once
 #include "irc.h"
+#include "module.h"
 #include "ircparse.h"
 #include "configuration.h"
+
+#include "m_test.h"
 
 #include <vector>
 #include <iostream>
@@ -25,4 +29,8 @@ class Bot {
         std::vector<std::string> channels;
         Configuration *config;
         IrcConnection *conn;
+        
+        std::vector<Module *> modules;
+        
+        void LoadModules();
 };

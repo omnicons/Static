@@ -17,6 +17,8 @@ Bot::Bot() {
         /* Failed to load config properly */
         throw std::runtime_error("Failed to load IRC hostname and port from config!");
     }
+    
+    this->LoadModules();
 }
 
 Bot::~Bot() {
@@ -36,12 +38,17 @@ void Bot::Go() {
             Line ln(raw); /* Parse the line using our line parser */
             cout << "--> " << raw << "\n";
             
+            
             if (ln.command == "PING" && ln.params.size() > 0) { /* Ping response */
                 this->Raw("PONG :" + ln.params[0]);
             } else if (ln.command == "001") { /* RPL_WELCOME: Registered with the network */
                 for (std::string &channel : this->channels) {
                     this->Join(channel);
                 }              
+            }
+            
+            for (Module *&mod : this->modules) {
+                mod->OnIRCRaw(ln);
             }
         }    
     }
@@ -54,4 +61,9 @@ void Bot::Raw(std::string line) {
 
 void Bot::Join(std::string channel) {
     this->Raw("JOIN " + channel);
+}
+
+
+void Bot::LoadModules() {
+    this->modules.push_back(new ModuleTest());
 }
