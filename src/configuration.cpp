@@ -23,7 +23,7 @@ void Configuration::Parse() {
             continue;
         }
         
-        for (char& c : line) {
+        for (char c : line) {
             if (in_value) {
                 value += c;;
             } else if (c == '=') {

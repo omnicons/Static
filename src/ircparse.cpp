@@ -17,7 +17,7 @@ static inline std::string ltrim(std::string s) {
 std::string TakeWhileGood(std::string str, std::string badchars) {
 	std::string out;
 
-	for (char &c : str) {
+	for (char c : str) {
 		if (badchars.find(c) != std::string::npos) {
 			break;
 		}
