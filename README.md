@@ -11,14 +11,13 @@ This bit is subject to change as how we're handing configuration right now is si
 Current options are:
 
 * irc_host (Currently only supports IPv4 hosts)
-
 * irc_port (Currently only supports non ssl ports)
+* irc_nick
+* irc_ident
+* irc_realname
+* irc_channels (Comma-separated list)
 
 Proposted configuration options that have not been added as of yet:
-
-* irc_nick
-
-* autojoin (For having the bot join channels upon connection)
 
 * nickerv authentication perform on connect (sasl might come later after ssl connctions are implemented)
 
