@@ -30,7 +30,7 @@ void Bot::Go() {
     std::string raw;
     this->conn->Connect();
     
-    this->Raw("NICK " + this->nick);
+    this->Nick(this->nick);
     this->Raw("USER " + this->ident + " * * :" + this->realname);
     
     while (true) {
@@ -45,6 +45,10 @@ void Bot::Go() {
                 for (std::string &channel : this->channels) {
                     this->Join(channel);
                 }              
+            } else if (ln.command == "433") { /* ERR_NICKNAMEINUSE: Nickname is already in use */
+                cout << "Nickname " << this->nick << " is already in use, appending an underscore and trying again.\n";
+                this->nick += "_";
+                this->Nick(this->nick);
             }
             
             for (Module *&mod : this->modules) {
@@ -61,6 +65,10 @@ void Bot::Raw(std::string line) {
 
 void Bot::Join(std::string channel) {
     this->Raw("JOIN " + channel);
+}
+
+void Bot::Nick(std::string nick) {
+    this->Raw("NICK " + nick);
 }
 
 void Bot::LoadModule(Module *module) {

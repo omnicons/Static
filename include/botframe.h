@@ -22,6 +22,7 @@ class Bot {
         
         /* IRC protocol functions */
         void Join(std::string channel);
+        void Nick(std::string nick);
     private:
         std::string nick;
         std::string ident;
