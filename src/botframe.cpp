@@ -23,7 +23,7 @@ Bot::Bot() : config("bot.config") {
 Bot::~Bot() {
     delete this->conn;
     
-    for (Module *&mod : this->modules) {
+    for (Module *mod : this->modules) {
         delete mod;
     }
 }
