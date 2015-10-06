@@ -11,7 +11,7 @@ IrcConnection::~IrcConnection() {
     delete this->buffer;
 }
 
-bool IrcConnection::Connect() {
+void IrcConnection::Connect() {
     int res;
     struct addrinfo hints; 
 	struct addrinfo *servinfo; 
@@ -23,27 +23,21 @@ bool IrcConnection::Connect() {
 	hints.ai_flags = AI_PASSIVE; 
 	
 	if ((res = getaddrinfo(this->host.c_str(), std::to_string(this->port).c_str(), &hints, &servinfo)) != 0) { 
-	    cout << "Error occured resolving address of IRC server: " << gai_strerror(res) << "\n";
-	    return false;
+	    throw std::runtime_error(std::string("Error occured resolving address of IRC server: ") + gai_strerror(res));
 	}
 	
 	if ((this->sock = socket(servinfo->ai_family, servinfo->ai_socktype, servinfo->ai_protocol)) == -1) {
-	    cout << "Failed to create socket!\n";
 	    freeaddrinfo(servinfo);
-	    return false;
+	    throw std::runtime_error(std::string("Failed to create socket: ") + strerror(errno));
 	}
 		
 	if ((res = connect(this->sock, servinfo->ai_addr, servinfo->ai_addrlen)) == -1) { 
-        cout << "Failed to connect to IRC server!\n";
 		freeaddrinfo(servinfo);
-		return false;
+		throw std::runtime_error(std::string("Failed to connect to IRC server: ") + strerror(errno));
 	}
 	
 	freeaddrinfo(servinfo);
-	
-	cout << "Connected!\n";
-	
-	return true;
+    cout << "Successfully connected to IRC.\n";	
 }
 
 void IrcConnection::WriteLine(std::string line) {

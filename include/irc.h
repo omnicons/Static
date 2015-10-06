@@ -1,3 +1,4 @@
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
@@ -22,7 +23,7 @@ class IrcConnection {
     public:
         IrcConnection(std::string host, int port);
         ~IrcConnection();
-        bool Connect();
+        void Connect();
         void Disconnect();
         void WriteLine(std::string line);
         bool ReadLine(std::string &line);
