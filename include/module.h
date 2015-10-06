@@ -6,6 +6,5 @@ class Module {
     public:
         Module() { }
         virtual void OnIRCRaw(Line line) { }
-    private:
         Bot *bot;
 };

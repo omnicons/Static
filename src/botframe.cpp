@@ -63,7 +63,11 @@ void Bot::Join(std::string channel) {
     this->Raw("JOIN " + channel);
 }
 
+void Bot::LoadModule(Module *module) {
+    module->bot = this;
+    this->modules.push_back(module);
+}
 
 void Bot::LoadModules() {
-    this->modules.push_back(new ModuleTest());
+    this->LoadModule(new ModuleTest());
 }

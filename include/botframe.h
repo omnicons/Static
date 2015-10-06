@@ -32,5 +32,6 @@ class Bot {
         
         std::vector<Module *> modules;
         
+        void LoadModule(Module *module);
         void LoadModules();
 };
