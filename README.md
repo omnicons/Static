@@ -11,15 +11,15 @@ This bit is subject to change as how we're handing configuration right now is si
 Current options are:
 
 * irc_host (Currently only supports IPv4 hosts)
-* irc_port (Currently only supports non ssl ports)
+* irc_port (Currently only supports non-TLS ports)
 * irc_nick
 * irc_ident
 * irc_realname
-* irc_channels (Comma-separated list)
+* irc_channels (Comma-and-space-separated (", ") list)
 
-Proposted configuration options that have not been added as of yet:
+Proposed configuration options that have not been added as of yet:
 
-* nickerv authentication perform on connect (sasl might come later after ssl connctions are implemented)
+* NickServ authentication and/or perform on connect (SASL might come later after TLS connctions are implemented)
 
 # Features
 The bot is based around plugins and will support functions similar to a network services bot for larger channels that require more functionality and automation.
