@@ -1,17 +1,17 @@
 #include "botframe.h"
 
-Bot::Bot() {
+Bot::Bot() : config("bot.config") {
     std::string host;
     int port;
     
     this->config = new Configuration("bot.config");
-    if (!this->config->GetString("irc_nick", this->nick) || !this->config->GetString("irc_ident", this->ident) || !this->config->GetString("irc_realname", this->realname)) {
+    if (!this->config.GetString("irc_nick", this->nick) || !this->config.GetString("irc_ident", this->ident) || !this->config.GetString("irc_realname", this->realname)) {
         throw std::runtime_error("Failed to load IRC identity from config!");
     }
     
-    this->config->GetStringList("irc_channels", this->channels); /* If this fails, we'll just assume we aren't joining any channels. */
+    this->config.GetStringList("irc_channels", this->channels); /* If this fails, we'll just assume we aren't joining any channels. */
     
-    if (this->config->GetString("irc_host", host) && this->config->GetInt("irc_port", port)) {
+    if (this->config.GetString("irc_host", host) && this->config.GetInt("irc_port", port)) {
         this->conn = new IrcConnection(host, port);
     } else {
         /* Failed to load config properly */
@@ -22,7 +22,6 @@ Bot::Bot() {
 }
 
 Bot::~Bot() {
-    delete this->config;
     delete this->conn;
     
     for (Module *&mod : this->modules) {

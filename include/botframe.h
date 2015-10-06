@@ -28,7 +28,7 @@ class Bot {
         std::string ident;
         std::string realname;
         std::vector<std::string> channels;
-        Configuration *config;
+        Configuration config;
         IrcConnection *conn;
         
         std::vector<Module *> modules;
