@@ -4,7 +4,6 @@ Bot::Bot() : config("bot.config") {
     std::string host;
     int port;
     
-    this->config = new Configuration("bot.config");
     if (!this->config.GetString("irc_nick", this->nick) || !this->config.GetString("irc_ident", this->ident) || !this->config.GetString("irc_realname", this->realname)) {
         throw std::runtime_error("Failed to load IRC identity from config!");
     }
