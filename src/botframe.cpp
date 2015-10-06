@@ -51,6 +51,7 @@ void Bot::Go() {
                 this->Nick(this->nick);
             }
             
+            /* Run module hooks for raw line */
             for (Module *&mod : this->modules) {
                 mod->OnIRCRaw(ln);
             }
