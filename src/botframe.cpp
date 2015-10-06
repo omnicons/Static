@@ -24,6 +24,10 @@ Bot::Bot() {
 Bot::~Bot() {
     delete this->config;
     delete this->conn;
+    
+    for (Module *&mod : this->modules) {
+        delete mod;
+    }
 }
 
 void Bot::Go() {
