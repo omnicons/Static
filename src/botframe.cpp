@@ -1,6 +1,6 @@
 #include "botframe.h"
 
-Bot::Bot() : config("bot.config") {
+Bot::Bot() : config("bot.config"), cmd_prefix("!") {
     std::string host;
     int port;
     
@@ -16,6 +16,8 @@ Bot::Bot() : config("bot.config") {
         /* Failed to load config properly */
         throw std::runtime_error("Failed to load IRC hostname and port from config!");
     }
+    
+    this->config.GetString("command_prefix", this->cmd_prefix);
     
     this->LoadModules();
 }
@@ -51,6 +53,38 @@ void Bot::Go() {
                 cout << "Nickname " << this->nick << " is already in use, appending an underscore and trying again.\n";
                 this->nick += "_";
                 this->Nick(this->nick);
+            } else if (ln.command == "PRIVMSG") {
+                std::string target = ln.params[0];
+                std::string message = ln.params[1];
+                
+                if (std::string("#&").find(target[0]) != std::string::npos) { /* Message is to a channel, &channels are server-local on some ircds. */
+                    for (Module *mod : this->modules) {
+                        mod->OnChannelMessage(*(ln.hostmask), target, message);
+                    }
+                } else { /* Message directly to us */
+                    for (Module *mod : this->modules) {
+                        mod->OnPrivateMessage(*(ln.hostmask), message);
+                    }
+                }
+                
+                if (message.find(this->cmd_prefix) == 0) { /* Starts with command prefix */
+                    if (message.length() > this->cmd_prefix.length()) {
+                        std::string raw_cmd = message.substr(this->cmd_prefix.length());
+                        std::vector<std::string> split_cmd = split_string(raw_cmd, " ");
+                        std::vector<std::string> cmd_args(split_cmd);
+                        std::string cmd = split_cmd[0];
+                        
+                        if (split_cmd.size() > 1) {
+                            cmd_args.erase(cmd_args.begin(), cmd_args.begin() + 1);
+                        } else {
+                            cmd_args.erase(cmd_args.begin(), cmd_args.end());
+                        }
+                        
+                        for (Module *mod : this->modules) {
+                            mod->OnIRCCommand(*(ln.hostmask), target, cmd, cmd_args);
+                        }
+                    }
+                }
             }
             
             /* Run module hooks for raw line */

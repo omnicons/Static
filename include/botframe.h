@@ -1,5 +1,6 @@
 #pragma once
 #include "irc.h"
+#include "utils.h"
 #include "module.h"
 #include "ircparse.h"
 #include "configuration.h"
@@ -28,6 +29,7 @@ class Bot {
         std::string ident;
         std::string realname;
         std::vector<std::string> channels;
+        std::string cmd_prefix;
         Configuration config;
         IrcConnection *conn;
         
