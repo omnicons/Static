@@ -3,6 +3,7 @@
 
 #include "utils.h"
 #include "module.h"
+#include "botframe.h"
 
 using std::cout;
 
