@@ -1,6 +1,6 @@
 #include "botframe.h"
 
-Bot::Bot() : config("bot.config"), cmd_prefix("!") {
+Bot::Bot() : cmd_prefix("!"), config("bot.config") {
     std::string host;
     int port;
     

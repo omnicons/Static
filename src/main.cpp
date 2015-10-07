@@ -3,6 +3,7 @@
 #include "utils.h"
 
 int main(int argc, char *argv[]) {
+    UNUSED(argc); UNUSED(argv);
     Bot bot;
     
     bot.Go();
