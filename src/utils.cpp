@@ -14,3 +14,7 @@ std::vector<std::string> split_string(std::string str, std::string delimiter) {
     
     return split;
 }
+
+std::string strtolower(std::string str) {
+    return boost::to_lower_copy<std::string>(str);
+}

@@ -2,6 +2,7 @@
 #include <set>
 #include <string>
 
+#include "utils.h"
 #include "ircparse.h"
 
 using std::set;
@@ -19,5 +20,5 @@ class Module {
         Bot *bot;
         set<string> listening_commands;
     protected:
-        void RegisterCommand(string command) { listening_commands.insert(command); }
+        void RegisterCommand(string command) { listening_commands.insert(strtolower(command)); }
 };

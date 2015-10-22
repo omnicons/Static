@@ -81,7 +81,7 @@ void Bot::Go() {
                         }
                         
                         for (Module *mod : this->modules) {
-                            if (mod->listening_commands.find(cmd) != mod->listening_commands.end()) {
+                            if (mod->listening_commands.find(strtolower(cmd)) != mod->listening_commands.end()) {
                                 mod->OnIRCCommand(*(ln.hostmask), target, cmd, cmd_args);
                             }
                         }
