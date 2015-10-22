@@ -1,6 +1,7 @@
 #include "m_test.h"
 
 ModuleTest::ModuleTest() {
+    this->RegisterCommand("test");
     cout << "Test module has been loaded!\n";
 }
 
